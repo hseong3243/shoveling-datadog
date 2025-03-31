@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
     id 'org.springframework.boot' version '3.4.4'
     id 'io.spring.dependency-management' version '1.1.7'
+    id "org.jetbrains.kotlin.plugin.allopen" version "1.9.25"
+    id "org.jetbrains.kotlin.plugin.noarg" version "1.9.25"
+    id "org.jetbrains.kotlin.plugin.jpa" version "1.9.25"
 }
 
 group = 'org.seong'
@@ -29,6 +32,10 @@ dependencies {
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
     runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'io.kotest:kotest-runner-junit5:5.8.0'
+    testImplementation 'io.kotest:kotest-assertions-core:5.8.0'
+    testImplementation 'io.kotest:kotest-property:5.8.0'
+    testImplementation 'io.kotest.extensions:kotest-extensions-spring:1.1.3'
 }
 
 kotlin {
@@ -37,6 +44,6 @@ kotlin {
     }
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }

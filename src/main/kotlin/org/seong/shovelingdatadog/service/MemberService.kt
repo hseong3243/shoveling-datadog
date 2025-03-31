@@ -23,15 +23,20 @@ class MemberService(
 
     @Transactional(readOnly = true)
     fun findById(memberId: Long): MemberOutput =
-        this.memberRepository.findByIdOrNull(memberId)
-            ?.let { MemberOutput.from(it) }
-            ?: throw NoSuchElementException("not found member")
+        this.getMember(memberId).let { MemberOutput.from(it) }
 
     @Transactional
-    fun accept() {
-        this.memberRepository.findAll()
-            .forEach { it.accept() }
-    }
+    fun accept(memberId: Long) =
+        this.getMember(memberId).accept()
+
+    @Transactional(readOnly = true)
+    fun findAllJoinedMember() =
+        this.memberRepository.findAllByStatus(MemberStatus.JOIN)
+            .map { MemberOutput.from(it) }
+
+    private fun getMember(memberId: Long): Member =
+        this.memberRepository.findByIdOrNull(memberId)
+            ?: throw NoSuchElementException("not found member")
 }
 
 data class SaveMemberInput(

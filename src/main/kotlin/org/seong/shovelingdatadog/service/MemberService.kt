@@ -1,6 +1,7 @@
 package org.seong.shovelingdatadog.service
 
 import org.seong.shovelingdatadog.domain.Member
+import org.seong.shovelingdatadog.domain.MemberStatus
 import org.seong.shovelingdatadog.repository.MemberJpaRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -25,6 +26,12 @@ class MemberService(
         this.memberRepository.findByIdOrNull(memberId)
             ?.let { MemberOutput.from(it) }
             ?: throw NoSuchElementException("not found member")
+
+    @Transactional
+    fun accept() {
+        this.memberRepository.findAll()
+            .forEach { it.accept() }
+    }
 }
 
 data class SaveMemberInput(
@@ -36,12 +43,14 @@ data class MemberOutput(
     val memberId: Long,
     val username: String,
     val password: String,
+    val status: MemberStatus
 ) {
     companion object {
         fun from(member: Member): MemberOutput = MemberOutput(
             memberId = member.memberId!!,
             username = member.username,
-            password = member.password
+            password = member.password,
+            status = member.status
         )
     }
 }

@@ -1,5 +1,6 @@
 package org.seong.shovelingdatadog.controller
 
+import org.seong.shovelingdatadog.domain.MemberStatus
 import org.seong.shovelingdatadog.service.MemberOutput
 import org.seong.shovelingdatadog.service.MemberService
 import org.seong.shovelingdatadog.service.SaveMemberInput
@@ -53,12 +54,14 @@ data class GetMemberResponse(
     val memberId: Long,
     val username: String,
     val password: String,
+    val status: MemberStatus,
 ) {
     companion object {
         fun from(output: MemberOutput) = GetMemberResponse(
             memberId = output.memberId,
             username = output.username,
             password = output.password,
+            status = output.status
         )
     }
 }

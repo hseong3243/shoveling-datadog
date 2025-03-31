@@ -11,4 +11,14 @@ class Member(
     val username: String,
     val password: String,
 ) {
+    var status: MemberStatus = MemberStatus.JOIN
+        private set
+
+    fun accept() {
+        this.status = MemberStatus.ACCEPT
+    }
+}
+
+enum class MemberStatus {
+    ACCEPT, JOIN,
 }

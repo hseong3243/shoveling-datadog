@@ -22,6 +22,7 @@ ENV DD_VERSION="1.0"
 ENV DD_AGENT_HOST="datadog-agent"
 ENV DD_TRACE_AGENT_PORT="8126"
 ENV DD_LOGS_INJECTION="true"
+ENV DD_TRACE_OTEL_ENABLED="true"
 
 LABEL com.datadoghq.tags.env="dev"
 LABEL com.datadoghq.tags.service="spring-app"
